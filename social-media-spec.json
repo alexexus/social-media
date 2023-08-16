@@ -1,0 +1,413 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Social Media",
+    "version": "v1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Generated server url"
+    }
+  ],
+  "tags": [
+    {
+      "name": "UserController",
+      "description": "API для работы с пользователями"
+    },
+    {
+      "name": "PostController",
+      "description": "API для работы с постами"
+    },
+    {
+      "name": "MessageController",
+      "description": "API для работы с сообщениями"
+    }
+  ],
+  "paths": {
+    "/friends/{userId}/{friendId}": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "Добавление в друзья",
+        "parameters": [
+          {
+            "description": "id пользователя",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          {
+            "description": "id друга",
+            "in": "path",
+            "name": "friendId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Информация сохранена"
+          }
+        }
+      }
+    },
+    "/messages": {
+      "post": {
+        "tags": [
+          "MessageController"
+        ],
+        "summary": "Отправка нового сообщения пользователю",
+        "requestBody": {
+          "description": "Данные запроса",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Message"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Информация сохранена"
+          }
+        }
+      }
+    },
+    "/auth": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "Получение токена авторизации",
+        "requestBody": {
+          "description": "Данные запроса",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            },
+            "description": "Токен получен"
+          }
+        }
+      }
+    },
+    "/registration": {
+      "post": {
+        "tags": [
+          "UserController"
+        ],
+        "summary": "Создание нового пользователя",
+        "requestBody": {
+          "description": "Данные запроса",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            },
+            "description": "Пост обновлен"
+          }
+        }
+      }
+    },
+    "/posts": {
+      "post": {
+        "tags": [
+          "PostController"
+        ],
+        "summary": "Создание нового поста",
+        "requestBody": {
+          "description": "Данные запроса",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Информация сохранена"
+          }
+        }
+      }
+    },
+    "/posts/{postId}": {
+      "get": {
+        "tags": [
+          "PostController"
+        ],
+        "parameters": [
+          {
+            "description": "id поста",
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "summary": "Получение поста по id",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": "Пост найден"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "PostController"
+        ],
+        "parameters": [
+          {
+            "description": "id поста",
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "summary": "Обновление поста по id",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": "Пост обновлен"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "PostController"
+        ],
+        "parameters": [
+          {
+            "description": "id поста",
+            "in": "path",
+            "name": "postId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "summary": "Удаление поста по id",
+        "responses": {
+          "200": {
+            "description": "Пост удален"
+          }
+        }
+      }
+    },
+    "/posts/users/{userId}": {
+      "get": {
+        "tags": [
+          "PostController"
+        ],
+        "summary": "Получение поста по id автора",
+        "parameters": [
+          {
+            "description": "id автора",
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            },
+            "description": "Пост по id автора найден"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Message": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор записи",
+            "format": "int64",
+            "example": 1
+          },
+          "fromId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "toId": {
+            "$ref": "#/components/schemas/User"
+          },
+          "text": {
+            "type": "string",
+            "description": "Текст сообщения",
+            "example": "text"
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор записи",
+            "format": "int64",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "user3"
+          },
+          "email": {
+            "type": "string",
+            "description": "Почта пользователя",
+            "example": "user3@mail.ru"
+          }
+        }
+      },
+      "Post": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Идентификатор записи",
+            "format": "int64",
+            "example": 1
+          },
+          "text": {
+            "type": "string",
+            "description": "Текст поста",
+            "example": "text"
+          },
+          "title": {
+            "type": "string",
+            "description": "Заголовок поста",
+            "example": "title"
+          },
+          "url": {
+            "type": "string",
+            "description": "Ссылка на изображение",
+            "example": "url"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "Токен авторизации",
+            "example": "eyJhbGciOiJIUzI1NiJ9"
+          }
+        }
+      },
+      "AuthUser": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "user3"
+          },
+          "password": {
+            "type": "string",
+            "description": "Почта пользователя",
+            "example": "12313124213"
+          }
+        }
+      },
+      "NewUser": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "example": "user3"
+          },
+          "email": {
+            "type": "string",
+            "description": "Почта пользователя",
+            "example": "user3@mail.ru"
+          },
+          "password": {
+            "type": "string",
+            "description": "Пароль",
+            "example": "12313124213"
+          },
+          "confirmedPassword": {
+            "type": "string",
+            "description": "Повторный пароль",
+            "example": "12313124213"
+          }
+        }
+      }
+    }
+  }
+}
